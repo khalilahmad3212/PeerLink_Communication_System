@@ -1,0 +1,57 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:peerlink_mobileapp/data/app_exceptions.dart';
+import 'package:peerlink_mobileapp/data/network/base_api_services.dart';
+
+class NetworkApiServices extends BaseApiServices {
+  @override
+  Future<dynamic> getApi(String url) async {
+    dynamic responseJson;
+
+    try {
+      final response =
+          await http.get(Uri.parse(url)).timeout(const Duration(seconds: 10));
+      responseJson = returnResponse(response);
+    } on SocketException {
+      throw InternetException('');
+    } on RequestTimeOutException {
+      throw RequestTimeOutException('');
+    }
+
+    return responseJson;
+  }
+
+  Future<dynamic> postApi(dynamic data, String url) async {
+    dynamic responseJson;
+
+    try {
+      // if raw data then encode otherwise if form data then do no encode
+      final response = await http
+          .post(Uri.parse(url), body: data)
+          .timeout(const Duration(seconds: 10));
+      responseJson = returnResponse(response);
+    } on SocketException {
+      throw InternetException('');
+    } on RequestTimeOutException {
+      throw RequestTimeOutException('');
+    }
+
+    return responseJson;
+  }
+
+  dynamic returnResponse(http.Response response) {
+    switch (response.statusCode) {
+      case 200:
+        dynamic responseJson = jsonDecode(response.body);
+        return responseJson;
+      case 400:
+        dynamic responseJson = jsonDecode(response.body);
+        return responseJson;
+      default:
+        throw FetchDataException(
+            'Error occured while communicating with server ${response.statusCode}');
+    }
+  }
+}
