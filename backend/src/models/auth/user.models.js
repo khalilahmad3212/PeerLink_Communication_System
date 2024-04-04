@@ -3,15 +3,15 @@ import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import mongoose, { Schema } from "mongoose";
 import {
-  AvailableSocialLogins,
+  // AvailableSocialLogins,
   AvailableUserRoles,
   USER_TEMPORARY_TOKEN_EXPIRY,
   UserLoginType,
   UserRolesEnum,
-} from "../../../constants.js";
-import { Cart } from "../ecommerce/cart.models.js";
-import { EcomProfile } from "../ecommerce/profile.models.js";
-import { SocialProfile } from "../social-media/profile.models.js";
+} from "../../constants.js";
+// import { Cart } from "../ecommerce/cart.models.js";
+// import { EcomProfile } from "../ecommerce/profile.models.js";
+// import { SocialProfile } from "../social-media/profile.models.js";
 
 const userSchema = new Schema(
   {
@@ -52,7 +52,7 @@ const userSchema = new Schema(
     },
     loginType: {
       type: String,
-      enum: AvailableSocialLogins,
+      // enum: AvailableSocialLogins,
       default: UserLoginType.EMAIL_PASSWORD,
     },
     isEmailVerified: {
