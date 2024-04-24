@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:peerlink_mobileapp/Screens/chat_screen/ChatScreen.dart';
+import 'package:peerlink_mobileapp/Screens/home_screen.dart/HomeScreen.dart';
+import 'package:peerlink_mobileapp/Screens/instructor_info_screen/InstructorInfoScreen.dart';
+import 'package:peerlink_mobileapp/Screens/login_signup_screen/login_signup_screen.dart';
+import 'package:peerlink_mobileapp/Screens/splash_screen/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,7 +36,14 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: LoginSignupScreen.screen_id,
+      routes: {
+        // SplashScreen.screen_id: (context) => SplashScreen(),
+        LoginSignupScreen.screen_id: (context) => LoginSignupScreen(),
+        HomeScreen.screen_id: (context) => HomeScreen(),
+        ChatScreen.screen_id: (context) => ChatScreen(),
+        InstructorInfoScreen.screen_id: (context) => InstructorInfoScreen(),
+      },
     );
   }
 }

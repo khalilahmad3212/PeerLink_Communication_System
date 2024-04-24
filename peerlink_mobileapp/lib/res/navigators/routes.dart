@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:peerlink_mobileapp/Screens/home_screen.dart/HomeScreen.dart';
 import 'package:peerlink_mobileapp/Screens/splash_screen/splash_screen.dart';
 import 'package:peerlink_mobileapp/res/navigators/routes_name.dart';
 
@@ -31,12 +32,12 @@ class AppRoutes {
         //   transitionDuration: const Duration(milliseconds: 250),
         //   transition: Transition.noTransition,
         // ),
-        // GetPage(
-        //   name: RouteName.homeScreen,
-        //   page: () => HomeScreen(),
-        //   transitionDuration: const Duration(milliseconds: 250),
-        //   transition: Transition.noTransition,
-        // ),
+        GetPage(
+          name: RouteName.homeScreen,
+          page: () => HomeScreen(),
+          transitionDuration: const Duration(milliseconds: 250),
+          transition: Transition.noTransition,
+        ),
         // GetPage(
         //   name: RouteName.profileScreen,
         //   page: () => ProfileScreen(),

@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:peerlink_mobileapp/Screens/signup_screen/signup_controller.dart';
+import 'package:peerlink_mobileapp/Screens/login_signup_screen/login_controller.dart';
 import 'package:peerlink_mobileapp/res/assets/image_assets.dart';
 import 'package:peerlink_mobileapp/res/colors/app_color.dart';
 import 'package:peerlink_mobileapp/res/components/custom_text.dart';
 import 'package:peerlink_mobileapp/res/components/round_button.dart';
+import 'package:peerlink_mobileapp/res/navigators/routes_name.dart';
 import 'package:peerlink_mobileapp/utils/responsive_size_util.dart';
 import 'package:peerlink_mobileapp/utils/utils.dart';
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
-  final signupController = Get.put(SignupController());
+class _LoginScreenState extends State<LoginScreen> {
+  final loginController = Get.put(LoginController());
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -33,15 +34,15 @@ class _SignupScreenState extends State<SignupScreen> {
               key: _formKey,
               child: Column(
                 children: [
-                  Image.asset(
-                    ImageAssets.partyMapLogo,
-                    width: 250,
-                  ),
+                  // Image.asset(
+                  //   ImageAssets.partyMapLogo,
+                  //   width: 250,
+                  // ),
                   SizedBox(
                     height: ResponsiveSizeUtil.scaleFactorHeight * 50,
                   ),
                   CustomText(
-                    text: 'Signup',
+                    text: 'Login',
                     color: AppColor.primaryColor,
                     fontSize: 42,
                     fontWeight: FontWeight.w700,
@@ -62,8 +63,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         horizontal: ResponsiveSizeUtil.size3,
                       ),
                       child: TextFormField(
-                        controller: signupController.emailController.value,
-                        focusNode: signupController.emailFocusNode.value,
+                        controller: loginController.emailController.value,
+                        focusNode: loginController.emailFocusNode.value,
                         validator: (value) {
                           if (value!.isEmpty) {
                             Utils.snakBar('Email', 'Enter Email');
@@ -72,8 +73,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         onFieldSubmitted: (value) => {
                           Utils.fieldFocusChange(
                               context,
-                              signupController.emailFocusNode.value,
-                              signupController.passwordFocusNode.value)
+                              loginController.emailFocusNode.value,
+                              loginController.passwordFocusNode.value)
                         },
                         style: TextStyle(
                           fontSize: ResponsiveSizeUtil.size15,
@@ -88,12 +89,13 @@ class _SignupScreenState extends State<SignupScreen> {
                           labelText: 'Email',
                           labelStyle: TextStyle(
                             fontSize: ResponsiveSizeUtil.size15,
-                            color: AppColor.grayColor,
+                            color: AppColor.greyColor,
                           ),
                         ),
                       ),
                     ),
                   ),
+                  // CustomTextField(label: 'Enter Email'),
                   const SizedBox(
                     height: 20,
                   ),
@@ -110,8 +112,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         horizontal: ResponsiveSizeUtil.size3,
                       ),
                       child: TextFormField(
-                        controller: signupController.passwordController.value,
-                        focusNode: signupController.passwordFocusNode.value,
+                        controller: loginController.passwordController.value,
+                        focusNode: loginController.passwordFocusNode.value,
                         validator: (value) {
                           if (value!.isEmpty) {
                             Utils.snakBar('Password', 'Enter Password');
@@ -133,55 +135,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           labelText: 'Password',
                           labelStyle: TextStyle(
                             fontSize: ResponsiveSizeUtil.size15,
-                            color: AppColor.grayColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    height: ResponsiveSizeUtil.size60,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.circular(ResponsiveSizeUtil.size10),
-                      color: const Color(0xFFF0F0F0),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: ResponsiveSizeUtil.size3,
-                      ),
-                      child: TextFormField(
-                        controller:
-                            signupController.confirmPasswordController.value,
-                        focusNode:
-                            signupController.confirmPasswordFocusNode.value,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            Utils.snakBar(
-                                'Confirm Password', 'Enter Confirm Password');
-                          }
-                        },
-                        onFieldSubmitted: (value) {},
-                        obscureText: true,
-                        obscuringCharacter: '●',
-                        style: TextStyle(
-                          fontSize: ResponsiveSizeUtil.size15,
-                          color: AppColor.blackColor,
-                        ),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          prefixIcon: Icon(
-                            Icons.lock,
-                            color: AppColor.primaryColor,
-                          ),
-                          labelText: 'Confirm Password',
-                          labelStyle: TextStyle(
-                            fontSize: ResponsiveSizeUtil.size15,
-                            color: AppColor.grayColor,
+                            color: AppColor.greyColor,
                           ),
                         ),
                       ),
@@ -195,18 +149,19 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
             Obx(
               () => RoundButton(
-                title: 'Signup',
+                title: 'Login',
                 width: double.infinity,
                 height: ResponsiveSizeUtil.size60,
                 fontSize: 22,
                 fontWeight: FontWeight.w700,
                 textColor: AppColor.primaryColor,
                 buttonColor: AppColor.whiteColor,
-                loading: signupController.loading.value,
+                loading: loginController.loading.value,
                 onPress: () {
                   if (_formKey.currentState!.validate()) {
-                    signupController.signupApi();
+                    loginController.loginApi();
                   }
+                  // Get.toNamed(RouteName.dashboardScreen);
                 },
               ),
             ),
@@ -217,17 +172,17 @@ class _SignupScreenState extends State<SignupScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomText(
-                  text: "already have an account? ",
+                  text: "don't have an account? ",
                   color: AppColor.whiteColor,
                   fontSize: ResponsiveSizeUtil.size16,
                   fontWeight: FontWeight.w500,
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.back();
+                    Get.toNamed(RouteName.signupScreen);
                   },
                   child: CustomText(
-                    text: "Login",
+                    text: "Signup",
                     color: AppColor.primaryColor,
                     fontSize: ResponsiveSizeUtil.size16,
                     fontWeight: FontWeight.w600,

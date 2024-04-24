@@ -47,7 +47,7 @@ class CustomTextField extends StatelessWidget {
           onChanged: onChanged,
           style: TextStyle(
             fontSize: ResponsiveSizeUtil.size15,
-            color: AppColor.blackColor,
+            color: Colors.black,
           ),
           decoration: InputDecoration(
             border: InputBorder.none,
@@ -55,7 +55,7 @@ class CustomTextField extends StatelessWidget {
             labelText: label,
             labelStyle: TextStyle(
               fontSize: ResponsiveSizeUtil.size15,
-              color: AppColor.grayColor,
+              color: Colors.grey,
             ),
           ),
         ),

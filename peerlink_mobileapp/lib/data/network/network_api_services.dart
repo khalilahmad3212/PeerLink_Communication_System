@@ -26,12 +26,16 @@ class NetworkApiServices extends BaseApiServices {
   Future<dynamic> postApi(dynamic data, String url) async {
     dynamic responseJson;
 
+    print('inside postApi: $data $url');
+
     try {
       // if raw data then encode otherwise if form data then do no encode
+      print('inside try block');
       final response = await http
           .post(Uri.parse(url), body: data)
           .timeout(const Duration(seconds: 10));
       responseJson = returnResponse(response);
+      print('finished postApi $responseJson');
     } on SocketException {
       throw InternetException('');
     } on RequestTimeOutException {

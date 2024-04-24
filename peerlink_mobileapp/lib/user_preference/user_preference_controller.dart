@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:peerlink_mobileapp/models/login/user_model.dart';
+import 'package:peerlink_mobileapp/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPreference extends GetxController {
