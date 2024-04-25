@@ -23,7 +23,7 @@ export const USER_TEMPORARY_TOKEN_EXPIRY = 20 * 60 * 1000; // 20 minutes
 
 export const MAXIMUM_SUB_IMAGE_COUNT = 4;
 
-export const DB_NAME = "PeerLink";
+export const DB_NAME = "temp";
 
 /**
  * @description set of events that we are using in chat app. more to be added as we develop the chat app
