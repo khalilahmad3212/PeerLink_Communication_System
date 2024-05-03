@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class AppColor {
   static const String themeColor1CodeHexa = "#fff1a443";

@@ -10,6 +10,8 @@ import 'package:peerlink_mobileapp/Screens/login_signup_screen/widgets/SignUpCar
 import 'package:peerlink_mobileapp/res/assets/image_assets.dart';
 
 class LoginSignupScreen extends StatefulWidget {
+  const LoginSignupScreen({super.key});
+
   @override
   State<StatefulWidget> createState() => LoginSignupScreenState();
 
@@ -48,11 +50,13 @@ class LoginSignupScreenState extends State<LoginSignupScreen> {
     super.dispose();
   }
 
-  void toggleBetweenSignInAndSignUp() {
-    setState(() {
-      isLogIn = !isLogIn;
-    });
-  }
+  // void toggleBetweenSignInAndSignUp() {
+  //   isLogIn = !isLogIn;
+  //   loginController.emailController.value.clear();
+  //   loginController.usernameController.value.clear();
+  //   loginController.passwordController.value.clear();
+  //   loginController.confirmPasswordController.value.clear();
+  // }
 
   void logIn(String id, String password) {
     Fluttertoast.showToast(
@@ -78,7 +82,7 @@ class LoginSignupScreenState extends State<LoginSignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Function toggleCards = toggleBetweenSignInAndSignUp;
+    // Function toggleCards = toggleBetweenSignInAndSignUp;
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
@@ -143,16 +147,18 @@ class LoginSignupScreenState extends State<LoginSignupScreen> {
                 ),
               ),
             ),
-            Positioned(
-              top: 250,
-              right: 0,
-              left: 0,
-              // bottom: 200,
-              // child: isLogIn ? logInCard(themeColor) : signUpCard(themeColor),
+            Obx(
+              () => Positioned(
+                top: 250,
+                right: 0,
+                left: 0,
+                // bottom: 200,
+                // child: isLogIn ? logInCard(themeColor) : signUpCard(themeColor),
 
-              child: isLogIn
-                  ? LogInCard(signUpSignInScreenInstance: this)
-                  : SignUpCard(signUpSignInScreenInstance: this),
+                child: loginController.isLogIn.value
+                    ? LogInCard(loginSignupScreenInstance: this)
+                    : SignUpCard(loginSignupScreenInstance: this),
+              ),
             ),
           ],
         ),

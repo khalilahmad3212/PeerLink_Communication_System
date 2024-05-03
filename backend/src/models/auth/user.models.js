@@ -43,7 +43,7 @@ const userSchema = new Schema(
     role: {
       type: String,
       enum: AvailableUserRoles,
-      default: UserRolesEnum.USER,
+      default: UserRolesEnum.STUDENT,
       required: true,
     },
     password: {

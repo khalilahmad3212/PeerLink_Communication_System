@@ -1,23 +1,21 @@
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:peerlink_mobileapp/Screens/login_signup_screen/login_controller.dart';
 import 'package:peerlink_mobileapp/Screens/login_signup_screen/login_signup_screen.dart';
 import 'package:peerlink_mobileapp/res/colors/app_color.dart';
-import 'package:peerlink_mobileapp/widgets/MyButton.dart';
-import 'package:peerlink_mobileapp/widgets/TextFormFieldId.dart';
-import 'package:peerlink_mobileapp/widgets/TextFormFieldPassword.dart';
-// import 'package:peerlink/components/TextFormFieldId.dart';
-// import 'package:peerlink/components/TextFormFieldPassword.dart';
-// import 'components/MyButton.dart';
+import 'package:peerlink_mobileapp/res/components/round_button.dart';
 
 class SignUpCard extends StatefulWidget {
   // const SignUpCard({super.key});
   // Function toggleCard;
-  LoginSignupScreenState signUpSignInScreenInstance;
+  LoginSignupScreenState loginSignupScreenInstance;
 
-  // SignUpSignInScreen signUpSignInScreenInstance;
+  // loginSignupScreen loginSignupScreenInstance;
   SignUpCard({
     Key? key,
-    required this.signUpSignInScreenInstance,
+    required this.loginSignupScreenInstance,
   }) : super(key: key);
 
   @override
@@ -26,39 +24,43 @@ class SignUpCard extends StatefulWidget {
 
 class _SignUpCardState extends State<SignUpCard> {
   // late final Function toggleCard = widget.toggleCard;
-  // SignUpSignInScreenState signUpSignInScreenInstance = widget.signUpSignInScreenInstance;
+  // loginSignupScreenState loginSignupScreenInstance = widget.loginSignupScreenInstance;
   final _signUpFormKey = GlobalKey<FormState>();
 
-  String id = '';
-  String password = '';
-  String confirmPassword = '';
+  final loginController = Get.put(LoginController());
 
-  late LoginSignupScreenState signUpSignInScreenStateInstance;
+  // String id = '';
+  // String password = '';
+  // String confirmPassword = '';
 
-  void getIdValueFromTextField(String id) {
-    this.id = id;
-  }
+  late LoginSignupScreenState loginSignupScreenStateInstance;
 
-  void getPasswordValueFromTextField(String password) {
-    this.password = password;
-  }
+  // void getIdValueFromTextField(String id) {
+  //   this.id = id;
+  // }
 
-  void getConfirmPasswordValueFromTextField(String confirmPassword) {
-    this.confirmPassword = confirmPassword;
-  }
+  // void getPasswordValueFromTextField(String password) {
+  //   this.password = password;
+  // }
+
+  // void getConfirmPasswordValueFromTextField(String confirmPassword) {
+  //   this.confirmPassword = confirmPassword;
+  // }
 
   validatePassAndConfirmPass() {
-    if (password == confirmPassword) {
-      signUpSignInScreenStateInstance.signUp(id, password);
+    if (loginController.passwordController.value.text ==
+        loginController.confirmPasswordController.value.text) {
+      return true;
     } else {
-      Fluttertoast.showToast(msg: "Unmatched Password!");
+      Fluttertoast.showToast(msg: "Password and Confirm Password not matched");
+      return false;
     }
   }
 
   @override
   void initState() {
     super.initState();
-    signUpSignInScreenStateInstance = widget.signUpSignInScreenInstance;
+    loginSignupScreenStateInstance = widget.loginSignupScreenInstance;
   }
 
   @override
@@ -71,7 +73,7 @@ class _SignUpCardState extends State<SignUpCard> {
         top: 20,
         bottom: 20,
       ),
-      height: 450,
+      height: 520,
       width: MediaQuery.of(context).size.width * 0.82,
       // width: 300,
       margin: const EdgeInsets.symmetric(horizontal: 30),
@@ -83,7 +85,7 @@ class _SignUpCardState extends State<SignUpCard> {
             color: Colors.grey.withOpacity(0.6),
             spreadRadius: 0.5,
             blurRadius: 2,
-            offset: Offset(0, 5),
+            offset: const Offset(0, 5),
           ),
         ],
       ),
@@ -93,13 +95,13 @@ class _SignUpCardState extends State<SignUpCard> {
           // crossAxisAlignment: CrossAxisAlignment.center,
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
+            const SizedBox(
               height: double.infinity,
               // color: Colors.pink.shade100,
               width: double.infinity,
             ),
             Positioned(
-              top: 30,
+              top: 10,
               left: 0,
               right: 0,
               child: Container(
@@ -118,8 +120,7 @@ class _SignUpCardState extends State<SignUpCard> {
                         onTap: () {
                           // toggleBetweenSignInAndSignUp();
                           // toggleCard();
-                          signUpSignInScreenStateInstance
-                              .toggleBetweenSignInAndSignUp();
+                          loginController.toggleLoginSignup();
                         },
                         child: Container(
                           // height: 30,
@@ -127,7 +128,7 @@ class _SignUpCardState extends State<SignUpCard> {
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(30)),
-                          child: Center(
+                          child: const Center(
                             child: Text(
                               'Log In',
                               style: TextStyle(
@@ -169,167 +170,291 @@ class _SignUpCardState extends State<SignUpCard> {
             ),
             // -------------------------------------------------------
             Positioned(
-              top: 90,
+              top: 60,
               left: 0,
               right: 0,
               child: Column(
                 children: [
-                  TextFormFieldId(
-                    hintText: "Enter your Id",
-                    sendTextFieldValue: getIdValueFromTextField,
-                  ),
-                  TextFormFieldPassword(
-                    hinttext: "Enter your password",
-                    sendTextFieldValue: getPasswordValueFromTextField,
-                  ),
-                  TextFormFieldPassword(
-                    hinttext: "Confirm your password",
-                    sendTextFieldValue: getConfirmPasswordValueFromTextField,
-                  ),
-
-                  /*
-                  TextFormField(
-                    decoration: InputDecoration(
-                      icon: Container(
-                        padding: EdgeInsets.only(top: 25),
-                        child: Icon(
-                          Icons.person,
+                  Container(
+                    height: 60,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: const Color(0xFFF0F0F0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 3,
+                      ),
+                      child: TextFormField(
+                        controller: loginController.emailController.value,
+                        focusNode: loginController.emailFocusNode.value,
+                        validator: (value) {
+                          // if (value!.isEmpty) {
+                          //   Utils.snakBar('Username', 'Enter Username');
+                          // }
+                          if (value!.isEmpty) {
+                            return 'Please enter email';
+                          }
+                          return null;
+                        },
+                        // onFieldSubmitted: (value) => {
+                        //   Utils.fieldFocusChange(
+                        //       context,
+                        //       loginController.emailFocusNode.value,
+                        //       loginController.passwordFocusNode.value)
+                        // },
+                        style: const TextStyle(
+                          fontSize: 15,
+                          color: AppColor.blackColor,
+                        ),
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          prefixIcon: Icon(
+                            Icons.email_rounded,
+                            color: AppColor.primaryColor,
+                          ),
+                          hintText: 'Email',
+                          hintStyle: TextStyle(
+                            fontSize: 15,
+                            color: AppColor.greyColor,
+                          ),
                         ),
                       ),
-                      errorStyle: TextStyle(
-                        fontSize: 10,
-                      ),
-                      contentPadding: EdgeInsets.only(
-                        // bottom: 20,
-                        top: 20,
-                      ),
-                      hintText: 'Enter your Id',
-                      hintStyle: TextStyle(
-                        color: Colors.black.withOpacity(0.3),
-                        fontSize: 12,
-                      ),
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please Enter Id';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      // _id = int.parse(value!);
-                      // Fluttertoast.showToast(msg: "value : $value");
-                    },
                   ),
-
-                  TextFormField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      icon: Container(
-                        padding: EdgeInsets.only(top: 25),
-                        child: Icon(
-                          Icons.password_sharp,
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: 60,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: const Color(0xFFF0F0F0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 3,
+                      ),
+                      child: TextFormField(
+                        controller: loginController.usernameController.value,
+                        focusNode: loginController.usernameFocusNode.value,
+                        validator: (value) {
+                          // if (value!.isEmpty) {
+                          //   Utils.snakBar('Username', 'Enter Username');
+                          // }
+                          if (value!.isEmpty) {
+                            return 'Please enter username';
+                          }
+                          return null;
+                        },
+                        // onFieldSubmitted: (value) => {
+                        //   Utils.fieldFocusChange(
+                        //       context,
+                        //       loginController.emailFocusNode.value,
+                        //       loginController.passwordFocusNode.value)
+                        // },
+                        style: const TextStyle(
+                          fontSize: 15,
+                          color: AppColor.blackColor,
+                        ),
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          prefixIcon: Icon(
+                            Icons.person_rounded,
+                            color: AppColor.primaryColor,
+                          ),
+                          hintText: 'Username',
+                          hintStyle: TextStyle(
+                            fontSize: 15,
+                            color: AppColor.greyColor,
+                          ),
                         ),
                       ),
-                      errorStyle: TextStyle(
-                        fontSize: 10,
-                      ),
-                      contentPadding: EdgeInsets.only(
-                        // bottom: 20,
-                        top: 20,
-                      ),
-                      hintText: 'Enter your password',
-                      hintStyle: TextStyle(
-                        color: Colors.black.withOpacity(0.3),
-                        fontSize: 12,
-                      ),
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please Enter Password';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      // _id = int.parse(value!);
-                    },
                   ),
-                  TextFormField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      // filled: true,
-                      // fillColor: Colors.red,
-                      icon: Container(
-                        padding: EdgeInsets.only(top: 25),
-                        child: Icon(
-                          Icons.password_sharp,
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Obx(
+                    () => Container(
+                      height: 60,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color(0xFFF0F0F0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 3),
+                        child: DropdownButtonFormField<String>(
+                          value: loginController.roleController.value,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            prefixIcon: Icon(Icons.school,
+                                color: AppColor.primaryColor),
+                            hintText: 'Select Role',
+                            hintStyle:
+                                TextStyle(fontSize: 15, color: Colors.grey),
+                          ),
+                          onChanged: (String? newValue) {
+                            loginController.roleController.value = newValue!;
+                            loginController.roleController.refresh();
+                          },
+                          items: <String>['STUDENT', 'TEACHER']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
                         ),
                       ),
-                      errorStyle: TextStyle(
-                        fontSize: 10,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: 60,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: const Color(0xFFF0F0F0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 3,
                       ),
-                      contentPadding: EdgeInsets.only(
-                        // bottom: 20,
-                        top: 20,
-                      ),
-                      hintText: 'Confirm your password',
-                      hintStyle: TextStyle(
-                        color: Colors.black.withOpacity(0.3),
-                        fontSize: 12,
+                      child: TextFormField(
+                        controller: loginController.passwordController.value,
+                        focusNode: loginController.passwordFocusNode.value,
+                        validator: (value) {
+                          // if (value!.isEmpty) {
+                          //   Utils.snakBar('Password', 'Enter Password');
+                          // }
+                          if (value!.isEmpty) {
+                            return 'Please enter password';
+                          }
+                          return null;
+                        },
+                        onFieldSubmitted: (value) {},
+                        obscureText: true,
+                        obscuringCharacter: '●',
+                        style: const TextStyle(
+                          fontSize: 15,
+                          color: AppColor.blackColor,
+                        ),
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          prefixIcon: Icon(
+                            Icons.lock,
+                            color: AppColor.primaryColor,
+                          ),
+                          hintText: 'Password',
+                          hintStyle: TextStyle(
+                            fontSize: 15,
+                            color: AppColor.greyColor,
+                          ),
+                        ),
                       ),
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please confirm your password';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      // _id = int.parse(value!);
-                    },
                   ),
-                  */
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: 60,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: const Color(0xFFF0F0F0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 3,
+                      ),
+                      child: TextFormField(
+                        controller:
+                            loginController.confirmPasswordController.value,
+                        focusNode:
+                            loginController.confirmPasswordFocusNode.value,
+                        validator: (value) {
+                          // if (value!.isEmpty) {
+                          //   Utils.snakBar('Password', 'Enter Password');
+                          // }
+                          if (value!.isEmpty) {
+                            return 'Please enter confirm password';
+                          }
+                          return null;
+                        },
+                        onFieldSubmitted: (value) {},
+                        obscureText: true,
+                        obscuringCharacter: '●',
+                        style: const TextStyle(
+                          fontSize: 15,
+                          color: AppColor.blackColor,
+                        ),
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          prefixIcon: Icon(
+                            Icons.lock,
+                            color: AppColor.primaryColor,
+                          ),
+                          hintText: 'Confirm Password',
+                          hintStyle: TextStyle(
+                            fontSize: 15,
+                            color: AppColor.greyColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  // TextFormFieldPassword(
+                  //   hinttext: "Confirm your password",
+                  //   sendTextFieldValue: getConfirmPasswordValueFromTextField,
+                  // ),
                 ],
               ),
             ),
 
             Positioned(
-              top: 310,
+              top: 415,
               left: 0,
               right: 0,
-              // child: GestureDetector(
-              // onTap: () {
-              //   if (_signUpFormKey.currentState!.validate()) {
-              //     _signUpFormKey.currentState!.save();
-              //     // Fluttertoast.showToast(
-              //     //     msg:
-              //     //         "Id : $id -- pass: $password -- conf Pass : $confirmPassword");
-              //     validatePassAndConfirmPass();
-              //     // btnSignUpPressed();
-              //     // signUpSignInScreenStateInstance.btnSignUpPressed(id,password);
-              //   }
-              //   // btnSignUpPressed();
-              // },
 
-              child: MyButton(
-                title: 'Sign Up',
-                btnColor: AppColor.primaryColor,
-                onPress: () {
-                  if (_signUpFormKey.currentState!.validate()) {
-                    _signUpFormKey.currentState!.save();
-                    // Fluttertoast.showToast(
-                    //     msg:
-                    //         "Id : $id -- pass: $password -- conf Pass : $confirmPassword");
-                    validatePassAndConfirmPass();
-                    // btnSignUpPressed();
-                    // signUpSignInScreenStateInstance.btnSignUpPressed(id,password);
-                  }
-                },
+              child: Obx(
+                () => RoundButton(
+                  title: "Sign Up",
+                  buttonColor: AppColor.primaryColor,
+                  textColor: Colors.white,
+                  fontSize: 17,
+                  height: 35,
+                  buttonRadius: 25,
+                  loading: loginController.loading.value,
+                  onPress: () {
+                    if (_signUpFormKey.currentState!.validate()) {
+                      _signUpFormKey.currentState!.save();
+                      // Fluttertoast.showToast(
+                      //     msg:
+                      //         "Id : $id -- pass: $password -- conf Pass : $confirmPassword");
+                      validatePassAndConfirmPass()
+                          ? {
+                              loginController.signupApi(),
+                              // !loginController.loading.value
+                              //     ? loginController.toggleLoginSignup()
+                              //     : null,
+                            }
+                          : null;
+                    }
+                  },
+                ),
               ),
               // ),
             ),
 
             Positioned(
-              top: 380,
+              top: 460,
               left: 0,
               right: 0,
               child: Row(
@@ -342,8 +467,7 @@ class _SignUpCardState extends State<SignUpCard> {
                   GestureDetector(
                     onTap: () {
                       // toggleCard();
-                      signUpSignInScreenStateInstance
-                          .toggleBetweenSignInAndSignUp();
+                      loginController.toggleLoginSignup();
                     },
                     child: const Text(
                       'Log In',

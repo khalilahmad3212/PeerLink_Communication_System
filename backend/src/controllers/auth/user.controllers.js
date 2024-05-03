@@ -51,7 +51,7 @@ const registerUser = asyncHandler(async (req, res) => {
     password,
     username,
     isEmailVerified: false,
-    role: role || UserRolesEnum.USER,
+    role: role || UserRolesEnum.STUDENT,
   });
 
   /**

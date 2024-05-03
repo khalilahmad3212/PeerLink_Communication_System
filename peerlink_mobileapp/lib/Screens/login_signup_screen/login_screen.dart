@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:peerlink_mobileapp/Screens/login_signup_screen/login_controller.dart';
-import 'package:peerlink_mobileapp/res/assets/image_assets.dart';
 import 'package:peerlink_mobileapp/res/colors/app_color.dart';
 import 'package:peerlink_mobileapp/res/components/custom_text.dart';
 import 'package:peerlink_mobileapp/res/components/round_button.dart';
@@ -69,6 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (value!.isEmpty) {
                             Utils.snakBar('Email', 'Enter Email');
                           }
+                          return null;
                         },
                         onFieldSubmitted: (value) => {
                           Utils.fieldFocusChange(
@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          prefixIcon: Icon(
+                          prefixIcon: const Icon(
                             Icons.email_rounded,
                             color: AppColor.primaryColor,
                           ),
@@ -118,6 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (value!.isEmpty) {
                             Utils.snakBar('Password', 'Enter Password');
                           }
+                          return null;
                         },
                         onFieldSubmitted: (value) {},
                         obscureText: true,
@@ -128,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          prefixIcon: Icon(
+                          prefixIcon: const Icon(
                             Icons.lock,
                             color: AppColor.primaryColor,
                           ),
@@ -160,8 +161,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPress: () {
                   if (_formKey.currentState!.validate()) {
                     loginController.loginApi();
+                  } else {
+                    Utils.snakBar('Error', 'Please fill all fields');
                   }
-                  // Get.toNamed(RouteName.dashboardScreen);
                 },
               ),
             ),

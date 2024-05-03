@@ -20,6 +20,8 @@ class Utils {
 
   static snakBar(String title, String message) {
     Get.snackbar(
+      backgroundColor: AppColor.appbarColor,
+      colorText: AppColor.secondaryColor,
       title,
       message,
     );

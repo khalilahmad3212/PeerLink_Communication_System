@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:peerlink_mobileapp/res/colors/app_color.dart';
 
 class TextFormFieldId extends StatelessWidget {
@@ -16,15 +15,15 @@ class TextFormFieldId extends StatelessWidget {
     return TextFormField(
       decoration: InputDecoration(
         icon: Container(
-          padding: EdgeInsets.only(top: 25),
-          child: Icon(
+          padding: const EdgeInsets.only(top: 25),
+          child: const Icon(
             Icons.person,
           ),
         ),
-        errorStyle: TextStyle(
+        errorStyle: const TextStyle(
           fontSize: 10,
         ),
-        contentPadding: EdgeInsets.only(
+        contentPadding: const EdgeInsets.only(
           // bottom: 20,
           top: 20,
         ),

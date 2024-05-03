@@ -1,9 +1,10 @@
 /**
- * @type {{ ADMIN: "ADMIN"; USER: "USER"} as const}
+ * @type {{ ADMIN: "ADMIN"; STUDENT: "STUDENT"; TEACHER: "TEACHER",} as const}
  */
 export const UserRolesEnum = {
   ADMIN: "ADMIN",
-  USER: "USER",
+  STUDENT: "STUDENT",
+  TEACHER: "TEACHER",
 };
 
 export const AvailableUserRoles = Object.values(UserRolesEnum);

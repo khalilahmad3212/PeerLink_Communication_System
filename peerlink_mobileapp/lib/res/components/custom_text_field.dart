@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:peerlink_mobileapp/res/colors/app_color.dart';
 import 'package:peerlink_mobileapp/utils/responsive_size_util.dart';
 
 class CustomTextField extends StatelessWidget {
