@@ -68,7 +68,7 @@ class _LogInCardState extends State<LogInCard> {
               width: double.infinity,
             ),
             Positioned(
-              top: 30,
+              top: 10,
               left: 0,
               right: 0,
               child: Container(

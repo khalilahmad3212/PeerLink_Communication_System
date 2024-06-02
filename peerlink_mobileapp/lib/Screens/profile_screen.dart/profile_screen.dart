@@ -81,8 +81,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 15),
               child: Container(
-                padding:
-                    const EdgeInsets.only(top: 15, left: 10, right: 10, bottom: 30),
+                padding: const EdgeInsets.only(
+                    top: 15, left: 10, right: 10, bottom: 30),
                 // height: 200,
                 width: MediaQuery.of(context).size.width * 1,
                 decoration: BoxDecoration(
