@@ -8,6 +8,7 @@ import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { removeLocalFile } from "../../utils/helpers.js";
+import { create } from "domain";
 
 /**
  * @description Utility function which returns the pipeline stages to structure the chat schema with common lookups
@@ -123,6 +124,7 @@ const searchAvailableUsers = asyncHandler(async (req, res) => {
         avatar: 1,
         username: 1,
         email: 1,
+        createdAt: 1,
       },
     },
   ]);
