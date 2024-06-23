@@ -1,8 +1,22 @@
-const io = require("socket.io")(3000);
+import { Server } from "socket.io";
+import express from 'express';
+
+const app = express();
+const io = new Server(3000);
 
 const users = {};
 
 console.log("Server starting...");
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
+// Health check endpoint
+app.get('/', (req, res) => {
+  res.status(200).send('OK');
+});
 
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
@@ -27,3 +41,6 @@ io.on("connection", (socket) => {
     delete users[socket.id];
   });
 });
+
+// Start the express server on port 3001
+app.listen(3001, () => console.log('Express server started on port 3001'));
